@@ -1,30 +1,31 @@
 #include <stdio.h>
-#include <string.h>
-#include <ctype.h>
-
-
-void monoalphabeticSubstitution(char *input, char *key) {
-    int length = strlen(input);
-
-    for (int i = 0; i < length; i++) {
-        if (isdigit(input[i])) {
-            int num = input[i] - '0';
-            if (num >= 0 && num <= 9) {
-                input[i] = key[num];
-            }
+int compute(int a, int m, int n)
+{
+    int r;
+    int y = 1;
+    while (m > 0)
+    {
+        r = m % 2;
+        if (r == 1) {
+            y = (y*a) % n;
         }
+        a = a*a % n;
+        m = m / 2;
     }
+    return y;
 }
-
-int main() {
-    char input[100];
-    char key[] = "XZCDBKJFGE"; 
-    printf("Enter a string with numbers: ");
-    fgets(input, sizeof(input), stdin);
-    input[strcspn(input, "\n")] = '\0'; 
-    monoalphabeticSubstitution(input, key);
-
-    printf("Substituted string: %s\n", input);
-
+int main()
+{
+    int p = 7;        
+    int g = 5;        
+    int a, b;    
+    int A, B;    
+    a = 2;       
+    A = compute(g, a, p);
+    b = 3;       
+    B = compute(g, b, p);
+    int keyA = compute(B, a, p);
+    int keyB = compute(A, b, p);
+    printf("Alice's secret key is %d\nBob's secret key is %d", keyA, keyB);
     return 0;
 }
